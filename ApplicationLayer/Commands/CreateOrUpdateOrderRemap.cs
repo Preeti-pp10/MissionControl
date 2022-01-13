@@ -42,11 +42,11 @@ namespace ApplicationLayer.Commands
                 {
                     if (command.ID > 0)
                     {
-                        var sql = @"Update Order_Remap set ORDER_NUMBE =@ORDER_NUMBER,PO_NUMBER =@PO_NUMBER,PO_NUMBER,REGION=@REGION,SUB_REGION=@SUB_REGION,DISTRICT=@DISTRICT,New_Region=@New_Region,New_Subregion=@New_Subregion,New_District= @New_District,Period=@Period,Start_Quarter=@Start_Quarter,Method=@Method,Standard_Reason=@Standard_Reason,Comments=@Comments,Is_Anaplan_TQM=@Is_Anaplan_TQM Where ID = @ID";
+                        var sql = "Update Order_Remap set ORDER_NUMBER =@ORDER_NUMBER,PO_NUMBER =@PO_NUMBER,REGION=@REGION,SUB_REGION=@SUB_REGION,DISTRICT=@DISTRICT,New_Region=@New_Region,New_Subregion=@New_Subregion,New_District= @New_District,Period=@Period,Start_Quarter=@Start_Quarter,Method=@Method,Standard_Reason=@Standard_Reason,Comments=@Comments,Is_Anaplan_TQM=@Is_Anaplan_TQM, Is_Approved_Move_To_New_Region=@Is_Approved_Move_To_New_Region Where ID =@ID";
                         using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                         {
                             connection.Open();
-                            result = await connection.ExecuteAsync(sql, command);
+                            result = await connection.ExecuteAsync(sql,command);
                             return result;
                         }
                     }

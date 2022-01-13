@@ -33,7 +33,7 @@ namespace MissionControl.Controllers
         [HttpPost(nameof(OrderRemapById))]
         public async Task<IActionResult> OrderRemapById(GetOrderRemapById query) => Ok(await Mediator.Send(query));
 
-        [HttpDelete(nameof(DeleteOrderRemap))]
+        [HttpPost(nameof(DeleteOrderRemap))]
         public async Task<IActionResult> DeleteOrderRemap(DeleteOrderRemapById command) => Ok(await Mediator.Send(command));
     }
 }
