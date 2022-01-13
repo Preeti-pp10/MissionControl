@@ -27,6 +27,9 @@ namespace MissionControl.Controllers
         [HttpPost(nameof(SaveOrderData))]
         public async Task<IActionResult> SaveOrderData(CreateOrUpdateOrderRemap command) => Ok(await Mediator.Send(command));
 
+        [HttpPost(nameof(SaveAuditData))]
+        public async Task<IActionResult> SaveAuditData(CreateOrderAuditCommand command) => Ok(await Mediator.Send(command));
+
         [HttpPost(nameof(OrderById))]
         public async Task<IActionResult> OrderById(GetOrdersById query) => Ok(await Mediator.Send(query));
 

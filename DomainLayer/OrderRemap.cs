@@ -24,5 +24,6 @@ namespace DomainLayer
         public string Comments { get; set; }
         public bool Is_Anaplan_TQM { get; set; }
         public bool Is_Approved_Move_To_New_Region { get; set; }
+
     }
 }
