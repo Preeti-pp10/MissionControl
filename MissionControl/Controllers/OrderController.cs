@@ -30,6 +30,9 @@ namespace MissionControl.Controllers
         [HttpPost(nameof(SaveAuditData))]
         public async Task<IActionResult> SaveAuditData(CreateOrderAuditCommand command) => Ok(await Mediator.Send(command));
 
+        [HttpPost(nameof(EditAuditData))]
+        public async Task<IActionResult> EditAuditData(UpdateAuditCommand command) => Ok(await Mediator.Send(command));
+
         [HttpPost(nameof(OrderById))]
         public async Task<IActionResult> OrderById(GetOrdersById query) => Ok(await Mediator.Send(query));
 
@@ -38,5 +41,8 @@ namespace MissionControl.Controllers
 
         [HttpPost(nameof(DeleteOrderRemap))]
         public async Task<IActionResult> DeleteOrderRemap(DeleteOrderRemapById command) => Ok(await Mediator.Send(command));
+
+     
+
     }
 }

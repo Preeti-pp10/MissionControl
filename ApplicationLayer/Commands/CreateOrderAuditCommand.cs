@@ -1,12 +1,16 @@
 ﻿using Dapper;
 using MediatR;
 using Microsoft.Extensions.Configuration;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace ApplicationLayer.Commands
 {
@@ -26,8 +30,13 @@ namespace ApplicationLayer.Commands
         public string Method { get; set; }
         public string Standard_Reason { get; set; }
         public string Comments { get; set; }
+        public string Remap_Type { get; set; } = "Created";
+        public string Remap_Person { get; set; } = System.Environment.GetEnvironmentVariable("COMPUTERNAME");
+        public DateTime Remap_Date { get; set; } = DateTime.Now;
         public bool Is_Anaplan_TQM { get; set; }
         public bool Is_Approved_Move_To_New_Region { get; set; }
+        public bool Is_Active { get; set; }=true;   
+
         public class CreateOrderAuditCommandHandler : IRequestHandler<CreateOrderAuditCommand, int>
         {
             private readonly IConfiguration _configuration;
@@ -37,13 +46,13 @@ namespace ApplicationLayer.Commands
             }
             public async Task<int> Handle(CreateOrderAuditCommand command, CancellationToken cancellationToken)
             {
-               if(command.ID > 0)
+               if(command.ID == 0)
                 {
-                    var sql = "Insert into Remap_Audit (ORDER_NUMBER,PO_NUMBER,REGION,SUB_REGION,DISTRICT,New_Region,New_Subregion,New_District,Period,Start_Quarter,Method,Standard_Reason,Comments,Is_Anaplan_TQM,Is_Approved_Move_To_New_Region) VALUES ( @ORDER_NUMBER,@PO_NUMBER,@REGION,@SUB_REGION,@DISTRICT,@New_Region,@New_Subregion,@New_District,@Period,@Start_Quarter,@Method,@Standard_Reason,@Comments,@Is_Anaplan_TQM,@Is_Approved_Move_To_New_Region)";
+                    var sql = "Insert into Order_Audit (ORDER_NUMBER,PO_NUMBER,REGION,SUB_REGION,DISTRICT,New_Region,New_Subregion,New_District,Period,Start_Quarter,Method,Standard_Reason,Comments,Is_Anaplan_TQM,Is_Approved_Move_To_New_Region,Remap_Date,Is_Active, Remap_Person,Remap_Type) VALUES ( @ORDER_NUMBER,@PO_NUMBER,@REGION,@SUB_REGION,@DISTRICT,@New_Region,@New_Subregion,@New_District,@Period,@Start_Quarter,@Method,@Standard_Reason,@Comments,@Is_Anaplan_TQM,@Is_Approved_Move_To_New_Region,@Remap_Date,@Is_Active,@Remap_Person,@Remap_Type)";
                     using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                     {
                         connection.Open();
-                        var result = await connection.ExecuteAsync(sql, new { command.ORDER_NUMBER, command.PO_NUMBER, command.REGION, command.SUB_REGION, command.DISTRICT, command.New_Region, command.New_Subregion, command.New_District, command.Period, command.Start_Quarter, command.Method, command.Standard_Reason, command.Comments, command.Is_Anaplan_TQM, command.Is_Approved_Move_To_New_Region });
+                        var result = await connection.ExecuteAsync(sql, new { command.ORDER_NUMBER, command.PO_NUMBER, command.REGION, command.SUB_REGION, command.DISTRICT, command.New_Region, command.New_Subregion, command.New_District, command.Period, command.Start_Quarter, command.Method, command.Standard_Reason, command.Comments, command.Is_Anaplan_TQM, command.Is_Approved_Move_To_New_Region, command.Remap_Date, command.Is_Active, command.Remap_Person, command.Remap_Type });
                         return result;
                     }
 
@@ -51,7 +60,7 @@ namespace ApplicationLayer.Commands
                 else 
                 {
                     return 0;
-                    
+
                 }
             }
         }
