@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -13,21 +14,36 @@ namespace ApplicationLayer.Commands
     public class CreateOrUpdateOrderRemap : IRequest<int>
     {
         public int ID { get; set; }
+        [Required]
         public string ORDER_NUMBER { get; set; }
+        [Required]
         public string PO_NUMBER { get; set; }
+        [Required]
         public string Period { get; set; }
+        [Required]
         public string Start_Quarter { get; set; }
+        [Required]
         public string DISTRICT { get; set; }
+        [Required]
         public string SUB_REGION { get; set; }
+        [Required]
         public string REGION { get; set; }
+        [Required]
         public string New_Region { get; set; }
+        [Required]
         public string New_Subregion { get; set; }
+        [Required]
         public string New_District { get; set; }
+        [Required]
         public string Method { get; set; }
+        [Required]
         public string Standard_Reason { get; set; }
+        [Required]
         public string Comments { get; set; }
         public DateTime Remap_Date { get; set; } = DateTime.Now;
+        [Required]
         public bool Is_Anaplan_TQM { get; set; }
+        [Required]
         public bool Is_Approved_Move_To_New_Region { get; set; }
         public class CreateOrUpdateOrderRemapHandler : IRequestHandler<CreateOrUpdateOrderRemap, int>
         {
