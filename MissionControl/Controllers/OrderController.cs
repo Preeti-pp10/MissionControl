@@ -33,6 +33,9 @@ namespace MissionControl.Controllers
         [HttpPost(nameof(EditAuditData))]
         public async Task<IActionResult> EditAuditData(UpdateAuditCommand command) => Ok(await Mediator.Send(command));
 
+        [HttpPost(nameof(DeleteAuditData))]
+        public async Task<IActionResult> DeleteAuditData(DeleteAuditData command) => Ok(await Mediator.Send(command));
+
         [HttpPost(nameof(OrderById))]
         public async Task<IActionResult> OrderById(GetOrdersById query) => Ok(await Mediator.Send(query));
 
@@ -42,7 +45,13 @@ namespace MissionControl.Controllers
         [HttpPost(nameof(DeleteOrderRemap))]
         public async Task<IActionResult> DeleteOrderRemap(DeleteOrderRemapById command) => Ok(await Mediator.Send(command));
 
-     
+        [HttpPost(nameof(RolesById))]
+        public async Task<IActionResult> RolesById(GetRoleById query) => Ok(await Mediator.Send(query));
 
+        [HttpPost(nameof(UsersById))]
+        public async Task<IActionResult> UsersById(GetUsersById query) => Ok(await Mediator.Send(query));
+
+        [HttpPost(nameof(ModulesById))]
+        public async Task<IActionResult> ModulesById(GetModule query) => Ok(await Mediator.Send(query));
     }
 }
