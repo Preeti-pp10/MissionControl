@@ -4,7 +4,6 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -12,28 +11,25 @@ using System.Threading.Tasks;
 
 namespace ApplicationLayer.Queries
 {
-    public class GetRoleById :IRequest<IList<RolesModel>>
+    public class GetRoles : IRequest<IList<RolesModel>>
     {
-        [Required]
-        public int Id { get; set; }
-        public class GetRoleByIdHandler : IRequestHandler<GetRoleById, IList<RolesModel>>
+        public class GetRolesHandle : IRequestHandler<GetRoles, IList<RolesModel>>
         {
             private readonly IConfiguration _configuration;
-            public GetRoleByIdHandler(IConfiguration configuration)
+            public GetRolesHandle(IConfiguration configuration)
             {
                 _configuration = configuration;
             }
-            public async Task<IList<RolesModel>> Handle(GetRoleById query, CancellationToken cancellationToken)
+            public async Task<IList<RolesModel>> Handle(GetRoles query, CancellationToken cancellationToken)
             {
-                var sql = "select o.Id ,r.RoleName From V5_MC_App_Admin_Roles r Inner Join User_Role o on r.Id = o.RoleId where o.Id = @Id";
+                var sql = "select RoleName from V5_MC_App_Admin_Roles where RoleName ='MC Admin' ";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<RolesModel>(sql, new { Id = query.Id });
+                    var result = await connection.QueryAsync<RolesModel>(sql);
                     return result.ToList();
                 }
             }
         }
-
     }
 }

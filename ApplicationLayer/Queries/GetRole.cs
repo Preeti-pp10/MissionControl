@@ -12,28 +12,26 @@ using System.Threading.Tasks;
 
 namespace ApplicationLayer.Queries
 {
-    public class GetRoleById :IRequest<IList<RolesModel>>
+    public class GetRole : IRequest<IList<RolesModel>>
     {
-        [Required]
-        public int Id { get; set; }
-        public class GetRoleByIdHandler : IRequestHandler<GetRoleById, IList<RolesModel>>
+       
+        public class GetRoleHandle : IRequestHandler<GetRole, IList<RolesModel>>
         {
             private readonly IConfiguration _configuration;
-            public GetRoleByIdHandler(IConfiguration configuration)
+            public GetRoleHandle(IConfiguration configuration)
             {
                 _configuration = configuration;
             }
-            public async Task<IList<RolesModel>> Handle(GetRoleById query, CancellationToken cancellationToken)
+            public async Task<IList<RolesModel>> Handle(GetRole query, CancellationToken cancellationToken)
             {
-                var sql = "select o.Id ,r.RoleName From V5_MC_App_Admin_Roles r Inner Join User_Role o on r.Id = o.RoleId where o.Id = @Id";
+                var sql = "select RoleName from V5_MC_App_Admin_Roles  ";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<RolesModel>(sql, new { Id = query.Id });
+                    var result = await connection.QueryAsync<RolesModel>(sql );
                     return result.ToList();
                 }
             }
         }
-
     }
 }
