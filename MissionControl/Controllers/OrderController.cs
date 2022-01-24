@@ -54,7 +54,7 @@ namespace MissionControl.Controllers
         [HttpPost(nameof(ModulesById))]
         public async Task<IActionResult> ModulesById(GetModule query) => Ok(await Mediator.Send(query));
 
-        [HttpGet(nameof(Roles))]
+        [HttpPost(nameof(Roles))]
         public async Task<IActionResult> Roles() => Ok(await Mediator.Send(new GetRole()));
 
         [HttpGet(nameof(MCADMIN))]

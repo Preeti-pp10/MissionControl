@@ -15,7 +15,8 @@ namespace ApplicationLayer.Queries
     public class GetModule : IRequest<IList<ModuleModel>>
     {
         [Required]
-        public int RoleId { get; set; }
+        public int Id { get; set; }
+        //public int RoleId { get; set; }
 
         public class GetModuleHandler : IRequestHandler<GetModule, IList<ModuleModel>>
         {
@@ -26,11 +27,11 @@ namespace ApplicationLayer.Queries
             }
             public async Task<IList<ModuleModel>> Handle(GetModule query, CancellationToken cancellationToken)
             {
-                var sql = "select m.ModuleName,u.IsModule,u.IsCreate,u.IsUpdate,u.IsDelete,u.IsRead , u.RoleId from V5_MC_App_Admin_Module m Inner Join V5_MC_App_Admin_Module_Role_Access_Mapping u on m.Id = u.ModuleId where u.RoleId = @RoleId";
+                var sql = "select m.ModuleName,u.Id,u.IsModule,u.IsCreate,u.IsUpdate,u.IsDelete,u.IsRead , u.RoleId from V5_MC_App_Admin_Module m Inner Join Role_Access_Mapping u on m.Id = u.ModuleId where u.Id=@Id AND RoleId=1";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<ModuleModel>(sql, new { RoleId = query.RoleId });
+                    var result = await connection.QueryAsync<ModuleModel>(sql, new {Id = query.Id});
                     return result.ToList();
                 }
             }

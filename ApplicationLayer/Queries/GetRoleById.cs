@@ -25,7 +25,7 @@ namespace ApplicationLayer.Queries
             }
             public async Task<IList<RolesModel>> Handle(GetRoleById query, CancellationToken cancellationToken)
             {
-                var sql = "select o.Id ,r.RoleName From V5_MC_App_Admin_Roles r Inner Join User_Role o on r.Id = o.RoleId where o.Id = @Id";
+                var sql = "select o.Id,o.RoleId ,r.RoleName From V5_MC_App_Admin_Roles r Inner Join User_Role o on r.Id = o.RoleId where o.Id = @Id";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
