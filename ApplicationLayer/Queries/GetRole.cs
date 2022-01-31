@@ -24,7 +24,7 @@ namespace ApplicationLayer.Queries
             }
             public async Task<IList<RolesModel>> Handle(GetRole query, CancellationToken cancellationToken)
             {
-                var sql = "select RoleName from V5_MC_App_Admin_Roles  ";
+                var sql = "select Id,RoleName from V5_MC_App_Admin_Roles";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();

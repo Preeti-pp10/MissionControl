@@ -14,5 +14,6 @@ namespace DomainLayer
         public string UserName { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.Now;
         public string CreatedBy { get; set; } = System.Environment.GetEnvironmentVariable("COMPUTERNAME");
+        
     }
 }

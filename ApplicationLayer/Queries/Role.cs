@@ -12,26 +12,24 @@ using System.Threading.Tasks;
 
 namespace ApplicationLayer.Queries
 {
-    public class GetModule : IRequest<IList<ModuleModel>>
+    public class Role : IRequest<IList<RolesModel>>
     {
         [Required]
         public int Id { get; set; }
-        //public int RoleId { get; set; }
-
-        public class GetModuleHandler : IRequestHandler<GetModule, IList<ModuleModel>>
+        public class RoleHandle : IRequestHandler<Role, IList<RolesModel>>
         {
             private readonly IConfiguration _configuration;
-            public GetModuleHandler(IConfiguration configuration)
+            public RoleHandle(IConfiguration configuration)
             {
                 _configuration = configuration;
             }
-            public async Task<IList<ModuleModel>> Handle(GetModule query, CancellationToken cancellationToken)
+            public async Task<IList<RolesModel>> Handle(Role query, CancellationToken cancellationToken)
             {
-                var sql = "select m.ModuleName,u.Id,u.IsModule,u.IsCreate,u.IsUpdate,u.IsDelete,u.IsRead , u.RoleId from V5_MC_App_Admin_Module m Inner Join Role_Access_Mapping u on m.Id = u.ModuleId where u.Id=@Id  AND u.RoleId=1";
+                var sql = "select Id,RoleName from V5_MC_App_Admin_Roles Where Id =@Id";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<ModuleModel>(sql, new {Id = query.Id});
+                    var result = await connection.QueryAsync<RolesModel>(sql, new {Id = query.Id});
                     return result.ToList();
                 }
             }
