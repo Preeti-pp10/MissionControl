@@ -49,7 +49,7 @@ builder.Services.AddScoped<MethodModel>();
 builder.Services.AddScoped<StandardMethodModel>();
 builder.Services.AddScoped<DataModel>();
 builder.Services.AddScoped<UserModel>();
-
+builder.Services.AddScoped<CustomerModel>();
 
 var app = builder.Build();
 

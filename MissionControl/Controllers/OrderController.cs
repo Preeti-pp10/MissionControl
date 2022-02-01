@@ -59,5 +59,8 @@ namespace MissionControl.Controllers
 
         [HttpGet(nameof(MCADMIN))]
         public async Task<IActionResult> MCADMIN() => Ok(await Mediator.Send(new GetRoles()));
+
+        [HttpPost(nameof(GetCustomer))]
+        public async Task<IActionResult> GetCustomer(GetCustomers query) => Ok(await Mediator.Send(query));
     }
 }
