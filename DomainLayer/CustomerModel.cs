@@ -8,6 +8,6 @@ namespace DomainLayer
 {
     public class CustomerModel
     {
-        public string Customer_Name { get; set; }
+        public string CUSTOMER_NAME { get; set; }
     }
 }

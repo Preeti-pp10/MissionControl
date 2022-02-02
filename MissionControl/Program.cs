@@ -50,6 +50,7 @@ builder.Services.AddScoped<StandardMethodModel>();
 builder.Services.AddScoped<DataModel>();
 builder.Services.AddScoped<UserModel>();
 builder.Services.AddScoped<CustomerModel>();
+builder.Services.AddScoped<MCCustomerModel>();
 
 var app = builder.Build();
 

@@ -62,5 +62,12 @@ namespace MissionControl.Controllers
 
         [HttpPost(nameof(GetCustomer))]
         public async Task<IActionResult> GetCustomer(GetCustomers query) => Ok(await Mediator.Send(query));
+
+        [HttpPost(nameof(InsertOrUpdateCustomer))]
+        public async Task<IActionResult> InsertOrUpdateCustomer(CreateOrUpdateCustomers command) => Ok(await Mediator.Send(command));
+
+        [HttpPost(nameof(GetAggregatedCustomers))]
+        public async Task<IActionResult> GetAggregatedCustomers(GetAggregateCustomer query) => Ok(await Mediator.Send(query));
+
     }
 }
