@@ -18,6 +18,8 @@ namespace ApplicationLayer.Commands
         public DateTime? entry_date { get; set; } 
         public DateTime created_on { get; set; }= DateTime.Now;
         public string created_by { get; set; } = System.Environment.MachineName;
+        public DateTime modified_on { get; set; } = DateTime.Now;
+        public string modified_by { get; set; } = System.Environment.MachineName;
 
         public class CreateOrUpdateCustomersHandler : IRequestHandler<CreateOrUpdateCustomers, int>
         {
@@ -31,7 +33,7 @@ namespace ApplicationLayer.Commands
             {
                 if (command.Id > 0)
                 {
-                    var sql = "Update MC_App_Customer_Aggregation set customer = @customer,aggregated_customer =@aggregated_customer, entry_date =@entry_date, created_on=@created_on, created_by =@created_by Where Id=@Id";
+                    var sql = "Update MC_App_Customer_Aggregation set aggregated_customer =@aggregated_customer, modified_on=@modified_on, modified_by =@modified_by Where Id=@Id";
                     using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                     {
                         connection.Open();

@@ -25,8 +25,8 @@ namespace ApplicationLayer.Queries
             }
             public async Task<IList<CustomerModel>> Handle(GetCustomers query, CancellationToken cancellationToken)
             {
-               
-                var sql = "SELECT nv.CUSTOMER_NAME FROM V6_dwh_bookings_oracle_n_vias nv WHERE nv.CUSTOMER_NAME LIKE '%' + @CUSTOMER_NAME + '%' and nv.CUSTOMER_NAME NOT IN (SELECT customer FROM MC_App_Customer_Aggregation)";
+                
+                var sql = "SELECT Distinct nv.CUSTOMER_NAME FROM V6_dwh_bookings_oracle_n_vias nv WHERE nv.CUSTOMER_NAME LIKE '%' + ( @CUSTOMER_NAME )  +  '%' and nv.CUSTOMER_NAME NOT IN (SELECT customer FROM MC_App_Customer_Aggregation)";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
