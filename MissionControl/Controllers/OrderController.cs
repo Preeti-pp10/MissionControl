@@ -84,5 +84,14 @@ namespace MissionControl.Controllers
         [HttpPost(nameof(CustomersById))]
         public async Task<IActionResult> CustomersById(GetAggregateCustomerById query) => Ok(await Mediator.Send(query));
 
+        [HttpPost(nameof(SaveAggregatedAudit))]
+        public async Task<IActionResult> SaveAggregatedAudit(CreateAggregateAuditCommand command) => Ok(await Mediator.Send(command));
+
+        [HttpPost(nameof(UpdateAuditAggregate))]
+        public async Task<IActionResult> UpdateAuditAggregate(UpdateAggregatedAudit command) => Ok(await Mediator.Send(command));
+
+        [HttpPost(nameof(MapAggregatedAuditCommamd))]
+        public async Task<IActionResult> MapAggregatedAuditCommamd(MapAggregatedAudit command) => Ok(await Mediator.Send(command));
+
     }
 }
