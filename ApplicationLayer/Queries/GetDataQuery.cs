@@ -22,7 +22,7 @@ namespace ApplicationLayer.Queries
             }
             public async Task<IList<DataModel>> Handle(GetDataQuery query, CancellationToken cancellationToken)
             {
-                var sql = "Select TRANS_DATE_YEAR_QUARTER,TRANS_DATE_PERIOD_NAME,REGION,SUB_REGION,DISTRICT from Orders";
+                var sql = "Select  TRANS_DATE_YEAR_QUARTER,TRANS_DATE_PERIOD_NAME,REGION,SUB_REGION,DISTRICT from Orders";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
