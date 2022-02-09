@@ -93,5 +93,16 @@ namespace MissionControl.Controllers
         [HttpPost(nameof(MapAggregatedAuditCommamd))]
         public async Task<IActionResult> MapAggregatedAuditCommamd(MapAggregatedAudit command) => Ok(await Mediator.Send(command));
 
+        [HttpPost(nameof(Funnel))]
+        public async Task<IActionResult> Funnel(FunnelCoverage command) => Ok(await Mediator.Send(command));
+
+        [HttpGet(nameof(GetFunnel))]
+        public async Task<IActionResult> GetFunnel() => Ok(await Mediator.Send(new GetAllFunnel()));
+
+        [HttpPost(nameof(FunnelAudit))]
+        public async Task<IActionResult> FunnelAudit(FunnelCoverageAudit command) => Ok(await Mediator.Send(command));
+
+        [HttpGet(nameof(GetAllReportStatus))]
+        public async Task<IActionResult> GetAllReportStatus() => Ok(await Mediator.Send(new GetReportStatus()));
     }
 }

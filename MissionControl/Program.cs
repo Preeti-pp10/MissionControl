@@ -50,7 +50,9 @@ builder.Services.AddScoped<StandardMethodModel>();
 builder.Services.AddScoped<DataModel>();
 builder.Services.AddScoped<UserModel>();
 builder.Services.AddScoped<CustomerModel>();
+builder.Services.AddScoped<FunnelCoverage>();
 builder.Services.AddScoped<MCCustomerModel>();
+builder.Services.AddScoped<ReportStatus>();
 
 var app = builder.Build();
 
