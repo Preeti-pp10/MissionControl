@@ -23,7 +23,7 @@ namespace ApplicationLayer.Queries
             public async Task<IList<ReportStatus>> Handle(GetReportStatus request, CancellationToken cancellationToken)
             {
 
-                var sql = "select t1.Forecast_Year_Period, t1.Reported_Forecast_Period,t1.Forecast_Quarter, t2.Prelim_Forecast_Year_Period from V5_MC_App_Report_Status t1,V5_MC_App_Report_Status t2 where t1.ID = 84 and t2.Prelim_Forecast_Year_Period = '2022-11'";
+                var sql = "select curr.Forecast_Year_Period, curr.Reported_Forecast_Period, curr.Forecast_Quarter,curr.Active, nxt.ID,IsNull(nxt.Prelim_Forecast_Year_Period, curr.Prelim_Forecast_Year_Period) As Prelim_Forecast_Year_Period from V5_MC_App_Report_Status as curr left join V5_MC_App_Report_Status as nxt on curr.ID = nxt.ID - 1 Where curr.Active = 1";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();

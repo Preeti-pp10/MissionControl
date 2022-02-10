@@ -104,5 +104,23 @@ namespace MissionControl.Controllers
 
         [HttpGet(nameof(GetAllReportStatus))]
         public async Task<IActionResult> GetAllReportStatus() => Ok(await Mediator.Send(new GetReportStatus()));
+
+        [HttpPost(nameof(UpdateReport))]
+        public async Task<IActionResult> UpdateReport(UpdateReportStatus command) => Ok(await Mediator.Send(command));
+
+        [HttpPost(nameof(UpdateReportStatusDeactive))]
+        public async Task<IActionResult> UpdateReportStatusDeactive(DeactivateReportBit command) => Ok(await Mediator.Send(command));
+
+        [HttpGet(nameof(GetAllReportPeroid))]
+        public async Task<IActionResult> GetAllReportPeroid() => Ok(await Mediator.Send(new GetReportPeriod()));
+
+        [HttpGet(nameof(GetAllReportPeroid1))]
+        public async Task<IActionResult> GetAllReportPeroid1() => Ok(await Mediator.Send(new GetReportPeriod1()));
+
+        [HttpPost(nameof(UpdatePeroid))]
+        public async Task<IActionResult> UpdatePeroid(UpdateReportPeriod command) => Ok(await Mediator.Send(command));
+
+        [HttpPost(nameof(UpdateReportPeriodDeactive))]
+        public async Task<IActionResult> UpdateReportPeriodDeactive(DeactivateReport command) => Ok(await Mediator.Send(command));
     }
 }

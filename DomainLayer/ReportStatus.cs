@@ -13,5 +13,6 @@ namespace DomainLayer
         public string Reported_Forecast_Period { get; set; }
         public string Forecast_Quarter { get; set; }
         public string Prelim_Forecast_Year_Period { get; set; }
+        public string Active { get; set; }
     }
 }
