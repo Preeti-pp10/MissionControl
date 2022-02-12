@@ -54,6 +54,8 @@ builder.Services.AddScoped<FunnelCoverage>();
 builder.Services.AddScoped<MCCustomerModel>();
 builder.Services.AddScoped<ReportStatus>();
 builder.Services.AddScoped<ReportPeroid>();
+builder.Services.AddScoped<ReportPeriodModel>();
+
 
 var app = builder.Build();
 

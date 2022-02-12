@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationLayer.Commands
 {
-    public class FunnelCoverage : IRequest<int>
+    public class FunnelCoverageCommand : IRequest<int>
     {
         public int ID { get; set; }
         public string Current_Quarter { get; set; }
@@ -19,20 +19,21 @@ namespace ApplicationLayer.Commands
         public string Forecast_Month { get; set; }
         public string Num_Qtrs { get; set; }
         public string FCST_YQ_M { get; set; }
+        public string report_year_quarter { get; set; }
 
-        public class FunnelCoverageHandler : IRequestHandler<FunnelCoverage, int>
+        public class FunnelCoverageCommandHandler : IRequestHandler<FunnelCoverageCommand, int>
         {
             private readonly IConfiguration _configuration;
-            public FunnelCoverageHandler(IConfiguration configuration)
+            public FunnelCoverageCommandHandler(IConfiguration configuration)
             {
                 _configuration = configuration;
             }
 
-            public async Task<int> Handle(FunnelCoverage command, CancellationToken cancellationToken)
+            public async Task<int> Handle(FunnelCoverageCommand command, CancellationToken cancellationToken)
             {
                 if (command.ID > 0)
                 {
-                    var sql = "UPDATE V5_MC_App_Config_Funnel_Coverage SET Current_Quarter = @Current_Quarter, Start_Quarter = @Start_Quarter, End_Quarter = @End_Quarter, Forecast_Month = @Forecast_Month, Num_Qtrs = @Num_Qtrs, FCST_YQ_M = @FCST_YQ_M Where ID = @ID";
+                    var sql = "UPDATE V5_MC_App_Config_Funnel_Coverage SET Current_Quarter = @report_year_quarter, Start_Quarter = @Start_Quarter, End_Quarter = @End_Quarter, Forecast_Month = @Forecast_Month, Num_Qtrs = @Num_Qtrs, FCST_YQ_M = @FCST_YQ_M Where ID = @ID";
                     using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                     {
                         connection.Open();

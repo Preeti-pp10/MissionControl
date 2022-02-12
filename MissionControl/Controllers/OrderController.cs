@@ -94,7 +94,7 @@ namespace MissionControl.Controllers
         public async Task<IActionResult> MapAggregatedAuditCommamd(MapAggregatedAudit command) => Ok(await Mediator.Send(command));
 
         [HttpPost(nameof(Funnel))]
-        public async Task<IActionResult> Funnel(FunnelCoverage command) => Ok(await Mediator.Send(command));
+        public async Task<IActionResult> Funnel(FunnelCoverageCommand command) => Ok(await Mediator.Send(command));
 
         [HttpGet(nameof(GetFunnel))]
         public async Task<IActionResult> GetFunnel() => Ok(await Mediator.Send(new GetAllFunnel()));
@@ -122,5 +122,39 @@ namespace MissionControl.Controllers
 
         [HttpPost(nameof(UpdateReportPeriodDeactive))]
         public async Task<IActionResult> UpdateReportPeriodDeactive(DeactivateReport command) => Ok(await Mediator.Send(command));
+
+        [HttpGet(nameof(UpdateSbodwReport))]
+        public async Task<IActionResult> UpdateSbodwReport() => Ok(await Mediator.Send(new UpdateEntryPeroid()));
+
+        [HttpGet(nameof(DeletePeriod))]
+        public async Task<IActionResult> DeletePeriod() => Ok(await Mediator.Send(new DeleteReportPeriod()));
+
+        [HttpGet(nameof(UpdateSbodReport))]
+        public async Task<IActionResult> UpdateSbodReport() => Ok(await Mediator.Send(new UpdateReportSbodStatus()));
+
+        [HttpGet(nameof(DeleteStatus))]
+        public async Task<IActionResult> DeleteStatus() => Ok(await Mediator.Send(new DeleteReportStatus()));
+
+        [HttpGet(nameof(GetNextEndQua))]
+        public async Task<IActionResult> GetNextEndQua() => Ok(await Mediator.Send(new GetNext_EndQuarter()));
+
+        [HttpGet(nameof(GetStartQua))]
+        public async Task<IActionResult> GetStartQua() => Ok(await Mediator.Send(new GetStartQuarter()));
+
+        [HttpGet(nameof(GetUpdateReport))]
+        public async Task<IActionResult> GetUpdateReport() => Ok(await Mediator.Send(new GetUpdateReortPeriod()));
+
+        [HttpGet(nameof(GetPeriod))]
+        public async Task<IActionResult> GetPeriod() => Ok(await Mediator.Send(new GetPeriodName()));
+
+        [HttpGet(nameof(GetForecast))]
+        public async Task<IActionResult> GetForecast() => Ok(await Mediator.Send(new GetForecastData()));
+
+        [HttpGet(nameof(GetNextQuarter))]
+        public async Task<IActionResult> GetNextQuarter() => Ok(await Mediator.Send(new GetNextForecastQuarter()));
+
+        [HttpPost(nameof(UpdatePeriod))]
+        public async Task<IActionResult> UpdatePeriod(UpdatePeriodCommand command) => Ok(await Mediator.Send(command));
+
     }
 }

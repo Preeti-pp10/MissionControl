@@ -15,6 +15,9 @@ namespace DomainLayer
         public string Forecast_Month { get; set; }
         public string Num_Qtrs { get; set; }
         public string FCST_YQ_M { get; set; }
+        public string report_year_quarter { get; set; }
+        public string year_quarter { get; set; }
+
 
     }
 }
