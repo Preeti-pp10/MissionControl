@@ -129,14 +129,14 @@ namespace MissionControl.Controllers
         [HttpGet(nameof(DeletePeriod))]
         public async Task<IActionResult> DeletePeriod() => Ok(await Mediator.Send(new DeleteReportPeriod()));
 
-        [HttpGet(nameof(UpdateSbodReport))]
-        public async Task<IActionResult> UpdateSbodReport() => Ok(await Mediator.Send(new UpdateReportSbodStatus()));
-
         [HttpGet(nameof(DeleteStatus))]
         public async Task<IActionResult> DeleteStatus() => Ok(await Mediator.Send(new DeleteReportStatus()));
 
-        [HttpGet(nameof(GetNextEndQua))]
-        public async Task<IActionResult> GetNextEndQua() => Ok(await Mediator.Send(new GetNext_EndQuarter()));
+        [HttpGet(nameof(GetNextQua))]
+        public async Task<IActionResult> GetNextQua() => Ok(await Mediator.Send(new GetNextCurrentQuarter()));
+
+        [HttpGet(nameof(GetEndQua))]
+        public async Task<IActionResult> GetEndQua() => Ok(await Mediator.Send(new GetNextEndQuarter()));
 
         [HttpGet(nameof(GetStartQua))]
         public async Task<IActionResult> GetStartQua() => Ok(await Mediator.Send(new GetStartQuarter()));
@@ -155,6 +155,20 @@ namespace MissionControl.Controllers
 
         [HttpPost(nameof(UpdatePeriod))]
         public async Task<IActionResult> UpdatePeriod(UpdatePeriodCommand command) => Ok(await Mediator.Send(command));
+
+        [HttpGet(nameof(GetForecastQuater))]
+        public async Task<IActionResult> GetForecastQuater() => Ok(await Mediator.Send(new GetNextForecastQuarter()));
+
+        [HttpGet(nameof(GetForecastMonth))]
+        public async Task<IActionResult> GetForecastMonth() => Ok(await Mediator.Send(new GetNextForecastMonth()));
+
+        [HttpPost(nameof(UpdateForecastPeriod))]
+        public async Task<IActionResult> UpdateForecastPeriod(UpdateForecast command) => Ok(await Mediator.Send(command));
+
+        [HttpGet(nameof(DeUpdatePeriod))]
+        public async Task<IActionResult> DeUpdatePeriod() => Ok(await Mediator.Send(new DeactiveUpdatePeriod()));
+
+
 
     }
 }

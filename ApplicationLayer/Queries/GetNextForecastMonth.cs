@@ -11,18 +11,19 @@ using System.Threading.Tasks;
 
 namespace ApplicationLayer.Queries
 {
-    public class GetNextForecastQuarter : IRequest<IList<FunnelCoverage>>
+    public class GetNextForecastMonth : IRequest<IList<FunnelCoverage>>
     {
-        public class GetNextForecastQuarterHandler : IRequestHandler<GetNextForecastQuarter, IList<FunnelCoverage>>
+        public class GetNextForecastMonthHandler : IRequestHandler<GetNextForecastMonth, IList<FunnelCoverage>>
         {
             private readonly IConfiguration _configuration;
-            public GetNextForecastQuarterHandler(IConfiguration configuration)
+            public GetNextForecastMonthHandler(IConfiguration configuration)
             {
                 _configuration = configuration;
             }
-            public async Task<IList<FunnelCoverage>> Handle(GetNextForecastQuarter request, CancellationToken cancellationToken)
+
+            public async Task<IList<FunnelCoverage>> Handle(GetNextForecastMonth request, CancellationToken cancellationToken)
             {
-                var sql ="(Select (select [report_year_quarter] from [V5_MC_App_sbodw_report_period])+ '-' + (select  case when(select m3  from[V5_MC_App_sbodb_report_status]) = report_period  then 'M3' else 'M1' end )as FCST_YQ_M FROM[V5_MC_App_sbodw_report_period])";
+                var sql = "Select case  when (select m3 FROM [V5_MC_App_sbodb_report_status]) = report_period then 'M3' else 'M1' end as Forecast_Month from [V5_MC_App_sbodw_report_period]";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();

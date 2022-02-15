@@ -13,6 +13,7 @@ namespace ApplicationLayer.Queries
 {
     public class GetStartQuarter :IRequest<IList<FunnelCoverage>>
     {
+
         public class GetStartQuarterHandler : IRequestHandler<GetStartQuarter, IList<FunnelCoverage>>
         {
             private readonly IConfiguration _configuration;
@@ -22,7 +23,7 @@ namespace ApplicationLayer.Queries
             }
             public async Task<IList<FunnelCoverage>> Handle(GetStartQuarter request, CancellationToken cancellationToken)
             {
-                var sql = "SELECT   min(year_quarter)  from (select top 3 year_quarter from dwh_periods where YEAR_QUARTER < (select [report_year_quarter] from[V5_MC_App_sbodw_report_period]) group by YEAR_QUARTER order by YEAR_QUARTER desc) as main";
+                var sql = "SELECT min(year_quarter) as Start_Quarter from (select top 3 year_quarter from dwh_periods where YEAR_QUARTER < (select[report_year_quarter] from[V5_MC_App_sbodw_report_period])group by YEAR_QUARTER order by YEAR_QUARTER desc) as main";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();

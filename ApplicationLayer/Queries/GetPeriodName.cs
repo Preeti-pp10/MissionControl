@@ -22,7 +22,7 @@ namespace ApplicationLayer.Queries
             }
             public async Task<IList<ReportPeriodModel>> Handle(GetPeriodName request, CancellationToken cancellationToken)
             {
-                var sql = "select nxt.Id,IsNull(nxt.TRANS_DATE_PERIOD_NAME, curr.TRANS_DATE_PERIOD_NAME)As TRANS_DATE_PERIOD_NAME from V5_MC_App_Update_Report_Period as curr left join V5_MC_App_Update_Report_Period as nxt on curr.Id = nxt.Id - 1 Where curr.Active = 1";
+                var sql = "select IsNull(nxt.TRANS_DATE_PERIOD_NAME, curr.TRANS_DATE_PERIOD_NAME)As TRANS_DATE_PERIOD_NAME from V5_MC_App_Update_Report_Period as curr left join V5_MC_App_Update_Report_Period as nxt on curr.Id = nxt.Id - 1 Where curr.Active = 1";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
