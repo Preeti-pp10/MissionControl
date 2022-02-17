@@ -22,7 +22,7 @@ namespace ApplicationLayer.Queries
             }
             public async Task<IList<FunnelCoverage>> Handle(GetForecastData request, CancellationToken cancellationToken)
             {
-                var sql = "Select ID,Forecast_Month,FCST_YQ_M from V5_MC_App_Config_Funnel_Coverage";
+                var sql = "Select * from V5_MC_App_Config_Funnel_Coverage";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();

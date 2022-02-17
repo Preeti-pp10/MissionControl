@@ -126,6 +126,9 @@ namespace MissionControl.Controllers
         [HttpGet(nameof(UpdateSbodwReport))]
         public async Task<IActionResult> UpdateSbodwReport() => Ok(await Mediator.Send(new UpdateEntryPeroid()));
 
+        [HttpGet(nameof(UpdateSbodStatus))]
+        public async Task<IActionResult> UpdateSbodStatus() => Ok(await Mediator.Send(new UpdateEntryStatus()));
+
         [HttpGet(nameof(DeletePeriod))]
         public async Task<IActionResult> DeletePeriod() => Ok(await Mediator.Send(new DeleteReportPeriod()));
 
@@ -167,6 +170,14 @@ namespace MissionControl.Controllers
 
         [HttpGet(nameof(DeUpdatePeriod))]
         public async Task<IActionResult> DeUpdatePeriod() => Ok(await Mediator.Send(new DeactiveUpdatePeriod()));
+
+        [HttpPost(nameof(PeriodAudit))]
+        public async Task<IActionResult> PeriodAudit(ReportPeriodAudit command) => Ok(await Mediator.Send(command));
+
+        [HttpPost(nameof(StatusAudit))]
+        public async Task<IActionResult> StatusAudit(ReportStatusAudit command) => Ok(await Mediator.Send(command));
+
+
 
 
 

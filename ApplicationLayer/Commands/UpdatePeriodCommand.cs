@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace ApplicationLayer.Commands
 {
     public class UpdatePeriodCommand : IRequest<int>
     {
-        [Required]
+       
         public string TRANS_DATE_PERIOD_NAME { get; set; }
 
         public class UpdatePeriodCommandHandler : IRequestHandler<UpdatePeriodCommand, int>

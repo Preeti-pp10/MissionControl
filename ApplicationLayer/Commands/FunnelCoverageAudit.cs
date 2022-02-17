@@ -19,7 +19,8 @@ namespace ApplicationLayer.Commands
         public string Forecast_Month { get; set; }
         public string Num_Qtrs { get; set; }
         public string FCST_YQ_M { get; set; }
-        public string User { get; set; } = System.Environment.MachineName;
+        public int FcID { get; set; }
+        public string Created_By { get; set; } = System.Environment.MachineName;
         public DateTime UpdateDate { get; set; } = DateTime.Now;
         public string Type { get; set; } = "Update";
 
@@ -34,11 +35,11 @@ namespace ApplicationLayer.Commands
             {
                 try
                 {
-                    var sql = "Insert into V5_MC_App_Config_Funnel_Coverage_Audit (Current_Quarter,Start_Quarter,End_Quarter,Forecast_Month,Num_Qtrs,FCST_YQ_M,User,UpdateDate,Type) VALUES (@Current_Quarter,@Start_Quarter,@End_Quarter,@Forecast_Month,@Num_Qtrs,@FCST_YQ_M,@User,@UpdateDate,@Type)";
+                    var sql = "Insert Into V5_MC_App_Config_Funnel_Coverage_Audit (Current_Quarter, Start_Quarter, End_Quarter, Forecast_Month, Num_Qtrs, FCST_YQ_M, Created_By, UpdateDate, FcID, Type) Values (@Current_Quarter, @Start_Quarter, @End_Quarter, @Forecast_Month, @Num_Qtrs, @FCST_YQ_M, @Created_By, @UpdateDate, @FcID, @Type)";
                     using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                     {
                         connection.Open();
-                        var result = await connection.ExecuteAsync(sql, new { command.Current_Quarter, command.Start_Quarter, command.End_Quarter, command.Forecast_Month, command.Num_Qtrs, command.FCST_YQ_M, command.Type, command.User, command.UpdateDate });
+                        var result = await connection.ExecuteAsync(sql, new { command.Current_Quarter, command.Start_Quarter, command.End_Quarter, command.Forecast_Month, command.Num_Qtrs, command.FCST_YQ_M, command.Created_By, command.UpdateDate , command.Type,command.FcID });
                         return result;
                     }
                 }
