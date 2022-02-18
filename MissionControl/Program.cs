@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
+using DomainLayer.CCB;
 
 var builder = WebApplication.CreateBuilder(args);
 string connString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -55,6 +56,7 @@ builder.Services.AddScoped<MCCustomerModel>();
 builder.Services.AddScoped<ReportStatus>();
 builder.Services.AddScoped<ReportPeroid>();
 builder.Services.AddScoped<ReportPeriodModel>();
+builder.Services.AddScoped<oracle_n_vias>();
 
 
 var app = builder.Build();
