@@ -13,5 +13,16 @@ namespace MissionControl.Controllers
 
         [HttpPost(nameof(CCB_ById))]
         public async Task<IActionResult> CCB_ById(GetCCBById query) => Ok(await Mediator.Send(query));
+
+        [HttpGet(nameof(Region))]
+        public async Task<IActionResult> Region() => Ok(await Mediator.Send(new GetSalesLeader()));
+
+        [HttpPost(nameof(SubRegion))]
+        public async Task<IActionResult> SubRegion(GetSubRegion query) => Ok(await Mediator.Send(query));
+
+
+        [HttpPost(nameof(Distrcit))]
+        public async Task<IActionResult> Distrcit(GetDistrict query) => Ok(await Mediator.Send(query));
+
     }
 }

@@ -11,19 +11,20 @@ using System.Threading.Tasks;
 
 namespace ApplicationLayer.Queries.CCB_Adjustments
 {
-    public class GetCCB : IRequest<IList<oracle_n_vias>>
+    public class GetSalesLeader :IRequest< IList<oracle_n_vias>>
     {
-        public class GetCCBHandler : IRequestHandler<GetCCB, IList<oracle_n_vias>>
+       
+        public class GetSalesLeaderHandler : IRequestHandler<GetSalesLeader, IList<oracle_n_vias>>
         {
             private readonly IConfiguration _configuration;
 
-            public GetCCBHandler(IConfiguration configuration)
+            public GetSalesLeaderHandler(IConfiguration configuration)
             {
                 _configuration = configuration;
             }
-            public async Task<IList<oracle_n_vias>> Handle(GetCCB request, CancellationToken cancellationToken)
+            public async Task<IList<oracle_n_vias>> Handle(GetSalesLeader query, CancellationToken cancellationToken)
             {
-                var sql = " Select REGION,SUB_REGION,ORDER_NUMBER,PO_NUMBER,DISTRICT,L3_BUSINESS_GROUP,L4_BUSINESS_UNIT,L5_PRODUCT_LINE,TRANS_DATE_PERIOD_NAME,CC_AMT_GROSS_BOOKINGS,TRANS_DATE from V6_dwh_bookings_oracle_n_vias WHERE NOT EXISTS(Select ORDER_NUMBER FROM V5_MC_App_Order_Split_Bookings_Adjustments) ";
+                var sql = " SELECT DISTINCT [Sales_Leader]  FROM  sbodw_V5_Sales_Leader_Hierarchy_v ORDER BY[Sales_Leader] ";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
