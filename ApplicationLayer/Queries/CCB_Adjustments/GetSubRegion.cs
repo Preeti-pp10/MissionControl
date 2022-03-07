@@ -13,7 +13,7 @@ namespace ApplicationLayer.Queries.CCB_Adjustments
 {
     public class GetSubRegion : IRequest<IList<oracle_n_vias>>
     {
-        public string Sales_Leader { get; set; }
+        public string Region { get; set; }
         public class GetSubRegionHandler : IRequestHandler<GetSubRegion, IList<oracle_n_vias>>
         {
             private readonly IConfiguration _configuration;
@@ -24,11 +24,11 @@ namespace ApplicationLayer.Queries.CCB_Adjustments
             }
             public async Task<IList<oracle_n_vias>> Handle(GetSubRegion query, CancellationToken cancellationToken)
             {
-                var sql = " SELECT DISTINCT [Sales_Team]  FROM  sbodw_V5_Sales_Leader_Hierarchy_v  Where Sales_Leader = @Sales_Leader ORDER BY [Sales_Team] ";
+                var sql = " SELECT DISTINCT  SubRegion FROM  sbodw_V5_Sales_Leader_Hierarchy_v Where Region = @Region  ORDER BY SubRegion";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<oracle_n_vias>(sql , new { Sales_Leader  = query.Sales_Leader });
+                    var result = await connection.QueryAsync<oracle_n_vias>(sql , new { Region  = query.Region });
                     return result.ToList();
                 }
             }

@@ -1,6 +1,10 @@
-﻿using ApplicationLayer.Queries.CCB_Adjustments;
+﻿using ApplicationLayer;
+using ApplicationLayer.Commands.CCB_Adjustments;
+using ApplicationLayer.Queries.CCB_Adjustments;
+using DomainLayer.CCB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlClient;
 
 namespace MissionControl.Controllers
 {
@@ -20,9 +24,15 @@ namespace MissionControl.Controllers
         [HttpPost(nameof(SubRegion))]
         public async Task<IActionResult> SubRegion(GetSubRegion query) => Ok(await Mediator.Send(query));
 
-
         [HttpPost(nameof(Distrcit))]
         public async Task<IActionResult> Distrcit(GetDistrict query) => Ok(await Mediator.Send(query));
 
+        [HttpPost(nameof(CustomSplit))]
+        public async Task<ActionResult> CustomSplit (CreateCustomCommand command) =>Ok( await Mediator.Send(command));  
+
+
+
     }
 }
+
+

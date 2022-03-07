@@ -1,4 +1,5 @@
 ﻿using DomainLayer;
+using DomainLayer.CCB;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

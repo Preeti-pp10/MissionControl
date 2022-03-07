@@ -57,7 +57,8 @@ builder.Services.AddScoped<ReportStatus>();
 builder.Services.AddScoped<ReportPeroid>();
 builder.Services.AddScoped<ReportPeriodModel>();
 builder.Services.AddScoped<oracle_n_vias>();
-
+builder.Services.AddScoped<CCB_Model>();
+builder.Services.AddScoped<BookingSplitOrder>();
 
 var app = builder.Build();
 
