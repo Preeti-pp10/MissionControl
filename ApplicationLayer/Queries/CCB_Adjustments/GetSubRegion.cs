@@ -24,7 +24,7 @@ namespace ApplicationLayer.Queries.CCB_Adjustments
             }
             public async Task<IList<oracle_n_vias>> Handle(GetSubRegion query, CancellationToken cancellationToken)
             {
-                var sql = " SELECT DISTINCT  SubRegion FROM  sbodw_V5_Sales_Leader_Hierarchy_v Where Region = @Region  ORDER BY SubRegion";
+                var sql = " SELECT Distinct SubRegion FROM  sbodw_V5_Sales_Leader_Hierarchy_v Where Region = @Region ORDER BY SubRegion";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();

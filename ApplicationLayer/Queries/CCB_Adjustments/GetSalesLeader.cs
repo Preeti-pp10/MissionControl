@@ -24,7 +24,7 @@ namespace ApplicationLayer.Queries.CCB_Adjustments
             }
             public async Task<IList<oracle_n_vias>> Handle(GetSalesLeader query, CancellationToken cancellationToken)
             {
-                var sql = " SELECT DISTINCT Region FROM  sbodw_V5_Sales_Leader_Hierarchy_v ORDER BY [Region] ";
+                var sql = " SELECT Distinct Region FROM  sbodw_V5_Sales_Leader_Hierarchy_v ORDER BY [Region] ";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();

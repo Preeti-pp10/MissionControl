@@ -25,7 +25,7 @@ namespace ApplicationLayer.Queries.CCB_Adjustments
             }
             public async Task<IList<oracle_n_vias>> Handle(GetDistrict query, CancellationToken cancellationToken)
             {
-                var sql = " SELECT DISTINCT  District FROM  sbodw_V5_Sales_Leader_Hierarchy_v  Where  SubRegion = @SubRegion ORDER BY District ";
+                var sql = " SELECT Distinct District FROM  sbodw_V5_Sales_Leader_Hierarchy_v  Where  SubRegion = @SubRegion ORDER BY District ";
                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();

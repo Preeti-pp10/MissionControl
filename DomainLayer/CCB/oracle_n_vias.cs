@@ -15,6 +15,7 @@ namespace DomainLayer.CCB
             List<oracle_n_vias> oracles { get; set; }
 
         }
+        public int ID { get; set; }
         public string ORDER_NUMBER { get; set; }
         public string Region { get; set; }
         public string SubRegion { get; set; }

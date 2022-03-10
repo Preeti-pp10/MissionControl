@@ -23,10 +23,12 @@ namespace WebApplication1.Models
         public virtual DbSet<Order> Orders { get; set; } = null!;
         public virtual DbSet<OrderAudit> OrderAudits { get; set; } = null!;
         public virtual DbSet<OrderRemap> OrderRemaps { get; set; } = null!;
+        public virtual DbSet<Region> Regions { get; set; } = null!;
         public virtual DbSet<RoleAccessMapping> RoleAccessMappings { get; set; } = null!;
         public virtual DbSet<SbodbCustomerAggregationFy22Update> SbodbCustomerAggregationFy22Updates { get; set; } = null!;
         public virtual DbSet<SbodwV5SalesLeaderHierarchyV> SbodwV5SalesLeaderHierarchyVs { get; set; } = null!;
         public virtual DbSet<StandardReason> StandardReasons { get; set; } = null!;
+        public virtual DbSet<SubRegion> SubRegions { get; set; } = null!;
         public virtual DbSet<UserRole> UserRoles { get; set; } = null!;
         public virtual DbSet<V5McAppAdminModule> V5McAppAdminModules { get; set; } = null!;
         public virtual DbSet<V5McAppAdminModuleRoleAccessMapping> V5McAppAdminModuleRoleAccessMappings { get; set; } = null!;
@@ -898,6 +900,16 @@ namespace WebApplication1.Models
                     .HasColumnName("SUB_REGION");
             });
 
+            modelBuilder.Entity<Region>(entity =>
+            {
+                entity.ToTable("Region");
+
+                entity.Property(e => e.Region1)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Region");
+            });
+
             modelBuilder.Entity<RoleAccessMapping>(entity =>
             {
                 entity.HasNoKey();
@@ -940,20 +952,17 @@ namespace WebApplication1.Models
 
                 entity.Property(e => e.District)
                     .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("DISTRICT");
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Region)
                     .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("REGION");
+                    .IsUnicode(false);
 
                 entity.Property(e => e.SubRegion)
                     .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("SUB_REGION");
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<StandardReason>(entity =>
@@ -964,6 +973,16 @@ namespace WebApplication1.Models
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("Standdard_Reason");
+            });
+
+            modelBuilder.Entity<SubRegion>(entity =>
+            {
+                entity.ToTable("SubRegion");
+
+                entity.Property(e => e.SubRegion1)
+                    .HasMaxLength(10)
+                    .HasColumnName("SubRegion")
+                    .IsFixedLength();
             });
 
             modelBuilder.Entity<UserRole>(entity =>
