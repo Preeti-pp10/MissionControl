@@ -1296,24 +1296,20 @@ namespace WebApplication1.Models
 
             modelBuilder.Entity<V5McAppOrderSplitBookingsAdjustmentsAudit>(entity =>
             {
-                entity.HasNoKey();
+                
 
                 entity.ToTable("V5_MC_App_Order_Split_Bookings_Adjustments_Audit");
 
+                entity.Property(e => e.Id).HasColumnName("ID");
+
                 entity.Property(e => e.Comments).HasMaxLength(255);
-
-                entity.Property(e => e.CreatedBy)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.CurrentCcbperiod)
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("CurrentCCBPeriod");
 
-                entity.Property(e => e.CurrentDistrict).HasMaxLength(255);
+                entity.Property(e => e.District).HasMaxLength(255);
 
                 entity.Property(e => e.District1).HasMaxLength(255);
 
@@ -1325,6 +1321,12 @@ namespace WebApplication1.Models
 
                 entity.Property(e => e.District5).HasMaxLength(255);
 
+                entity.Property(e => e.EntryBy)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EntryDate).HasColumnType("datetime");
+
                 entity.Property(e => e.FiscalPeriod)
                     .HasMaxLength(255)
                     .IsUnicode(false);
@@ -1333,17 +1335,20 @@ namespace WebApplication1.Models
                     .ValueGeneratedOnAdd()
                     .HasColumnName("ID");
 
-                entity.Property(e => e.L3)
+                entity.Property(e => e.L3BusinessGroup)
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("L3_BUSINESS_GROUP");
 
-                entity.Property(e => e.L4)
+                entity.Property(e => e.L4BusinessUnit)
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("L4_BUSINESS_UNIT");
 
-                entity.Property(e => e.L5)
+                entity.Property(e => e.L5ProductLine)
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("L5_PRODUCT_LINE");
 
                 entity.Property(e => e.OrderNumber).HasMaxLength(255);
 
@@ -1364,16 +1369,6 @@ namespace WebApplication1.Models
                 entity.Property(e => e.SplitType)
                     .HasMaxLength(100)
                     .IsUnicode(false);
-
-                entity.Property(e => e.SplitValue1).HasMaxLength(255);
-
-                entity.Property(e => e.SplitValue2).HasMaxLength(255);
-
-                entity.Property(e => e.SplitValue3).HasMaxLength(255);
-
-                entity.Property(e => e.SplitValue4).HasMaxLength(255);
-
-                entity.Property(e => e.SplitValue5).HasMaxLength(255);
 
                 entity.Property(e => e.TransDate).HasColumnType("datetime");
 

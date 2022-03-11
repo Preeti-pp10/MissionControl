@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
 
-namespace WebApplicationss1.Models
+namespace WebApplication1.Models
 {
     public class CCBDataAccessLayer
     {
@@ -11,6 +11,13 @@ namespace WebApplicationss1.Models
         public int InsertCCb(V5McAppOrderSplitBookingsAdjustment v5McAppOrderSplit)
         {
             db.V5McAppOrderSplitBookingsAdjustments.Add(v5McAppOrderSplit);
+            db.SaveChanges();
+            return 1;
+        }
+
+        public int InsertCCbAudit(V5McAppOrderSplitBookingsAdjustmentsAudit v5McAppOrderSplitAudit)
+        {
+            db.V5McAppOrderSplitBookingsAdjustmentsAudits.Add(v5McAppOrderSplitAudit);
             db.SaveChanges();
             return 1;
         }
