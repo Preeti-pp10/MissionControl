@@ -196,15 +196,7 @@ namespace WebApplication1.Controllers
 
 
 
-        [HttpPost(nameof(InsertCustomAudit))]
-        public ActionResult InsertCustomAudit()
-        {
-            int res = 0;
-            Guid guid = Guid.NewGuid();
-            V5McAppOrderSplitBookingsAdjustmentsAudit ba = AuditData(string Transcation);
-           
-            return Ok();
-        }
+
 
     }
 }
