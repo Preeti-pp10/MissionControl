@@ -21,5 +21,14 @@ namespace WebApplication1.Models
             db.SaveChanges();
             return 1;
         }
+
+
+        public int GetAuditData(string Transcation)
+        {
+            db.V5McAppOrderSplitBookingsAdjustmentsAudits.Where(order => order.Transcation == Transcation).ToList();
+            return 1;
+        }
+
+
     }
 }

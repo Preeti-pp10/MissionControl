@@ -17,6 +17,7 @@ namespace WebApplication1.Models
         }
 
         public virtual DbSet<DwhPeriod> DwhPeriods { get; set; } = null!;
+        public virtual DbSet<DwhProductHierarchy> DwhProductHierarchies { get; set; } = null!;
         public virtual DbSet<McAppCustomerAggregation> McAppCustomerAggregations { get; set; } = null!;
         public virtual DbSet<McAppCustomerAggregationAudit> McAppCustomerAggregationAudits { get; set; } = null!;
         public virtual DbSet<Method> Methods { get; set; } = null!;
@@ -121,6 +122,155 @@ namespace WebApplication1.Models
                 entity.Property(e => e.YearStartDate)
                     .HasPrecision(0)
                     .HasColumnName("YEAR_START_DATE");
+            });
+
+            modelBuilder.Entity<DwhProductHierarchy>(entity =>
+            {
+                entity.HasKey(e => e.ProdLineKey);
+
+                entity.ToTable("dwh_product_hierarchy");
+
+                entity.Property(e => e.ProdLineKey)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("PROD_LINE_KEY");
+
+                entity.Property(e => e.CommtestIntercoUpliftFactor).HasColumnName("COMMTEST_INTERCO_UPLIFT_FACTOR");
+
+                entity.Property(e => e.Level1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_1");
+
+                entity.Property(e => e.Level10)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_10");
+
+                entity.Property(e => e.Level10Desc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_10_DESC");
+
+                entity.Property(e => e.Level1Desc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_1_DESC");
+
+                entity.Property(e => e.Level2)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_2");
+
+                entity.Property(e => e.Level2Desc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_2_DESC");
+
+                entity.Property(e => e.Level3)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_3");
+
+                entity.Property(e => e.Level3Desc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_3_DESC");
+
+                entity.Property(e => e.Level4)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_4");
+
+                entity.Property(e => e.Level4Desc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_4_DESC");
+
+                entity.Property(e => e.Level5)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_5");
+
+                entity.Property(e => e.Level5Desc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_5_DESC");
+
+                entity.Property(e => e.Level6)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_6");
+
+                entity.Property(e => e.Level6Desc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_6_DESC");
+
+                entity.Property(e => e.Level7)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_7");
+
+                entity.Property(e => e.Level7Desc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_7_DESC");
+
+                entity.Property(e => e.Level8)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_8");
+
+                entity.Property(e => e.Level8Desc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_8_DESC");
+
+                entity.Property(e => e.Level9)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_9");
+
+                entity.Property(e => e.Level9Desc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("LEVEL_9_DESC");
+
+                entity.Property(e => e.ParentFlag)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("PARENT_FLAG");
+
+                entity.Property(e => e.PlmName)
+                    .HasMaxLength(301)
+                    .IsUnicode(false)
+                    .HasColumnName("PLM_NAME");
+
+                entity.Property(e => e.PlmSupervisorName)
+                    .HasMaxLength(301)
+                    .IsUnicode(false)
+                    .HasColumnName("PLM_SUPERVISOR_NAME");
+
+                entity.Property(e => e.ProdLineCode)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("PROD_LINE_CODE");
+
+                entity.Property(e => e.ProdLineDesc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("PROD_LINE_DESC");
+
+                entity.Property(e => e.SalesLevel3)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SALES_LEVEL_3");
+
+                entity.Property(e => e.SalesLevel3Desc)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("SALES_LEVEL_3_DESC");
             });
 
             modelBuilder.Entity<McAppCustomerAggregation>(entity =>
@@ -1302,34 +1452,61 @@ namespace WebApplication1.Models
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.Comments).HasMaxLength(255);
+                entity.Property(e => e.Bookings).HasColumnName("BOOKINGS");
 
-                entity.Property(e => e.CurrentCcbperiod)
+                entity.Property(e => e.Bookings1).HasColumnName("BOOKINGS1");
+
+                entity.Property(e => e.Bookings2).HasColumnName("BOOKINGS2");
+
+                entity.Property(e => e.Bookings3).HasColumnName("BOOKINGS3");
+
+                entity.Property(e => e.Bookings4).HasColumnName("BOOKINGS4");
+
+                entity.Property(e => e.Bookings5).HasColumnName("BOOKINGS5");
+
+                entity.Property(e => e.CcAmtGrossBookings).HasColumnName("CC_AMT_GROSS_BOOKINGS");
+
+                entity.Property(e => e.Comments)
+                    .HasMaxLength(500)
+                    .HasColumnName("COMMENTS");
+
+                entity.Property(e => e.District)
                     .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasColumnName("CurrentCCBPeriod");
+                    .HasColumnName("DISTRICT");
 
-                entity.Property(e => e.District).HasMaxLength(255);
+                entity.Property(e => e.District1)
+                    .HasMaxLength(255)
+                    .HasColumnName("DISTRICT1");
 
-                entity.Property(e => e.District1).HasMaxLength(255);
+                entity.Property(e => e.District2)
+                    .HasMaxLength(255)
+                    .HasColumnName("DISTRICT2");
 
-                entity.Property(e => e.District2).HasMaxLength(255);
+                entity.Property(e => e.District3)
+                    .HasMaxLength(255)
+                    .HasColumnName("DISTRICT3");
 
-                entity.Property(e => e.District3).HasMaxLength(255);
+                entity.Property(e => e.District4)
+                    .HasMaxLength(255)
+                    .HasColumnName("DISTRICT4");
 
-                entity.Property(e => e.District4).HasMaxLength(255);
-
-                entity.Property(e => e.District5).HasMaxLength(255);
+                entity.Property(e => e.District5)
+                    .HasMaxLength(255)
+                    .HasColumnName("DISTRICT5");
 
                 entity.Property(e => e.EntryBy)
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("ENTRY_BY");
 
-                entity.Property(e => e.EntryDate).HasColumnType("datetime");
+                entity.Property(e => e.EntryDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("ENTRY_DATE");
 
                 entity.Property(e => e.FiscalPeriod)
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("FISCAL_PERIOD");
 
                 entity.Property(e => e.Id)
                     .ValueGeneratedOnAdd()
@@ -1350,29 +1527,119 @@ namespace WebApplication1.Models
                     .IsUnicode(false)
                     .HasColumnName("L5_PRODUCT_LINE");
 
-                entity.Property(e => e.OrderNumber).HasMaxLength(255);
+                entity.Property(e => e.L5ProductLine1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("L5_PRODUCT_LINE1");
 
-                entity.Property(e => e.OriginalBookedDate).HasColumnType("datetime");
+                entity.Property(e => e.L5ProductLine2)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("L5_PRODUCT_LINE2");
 
-                entity.Property(e => e.SplitPercent).HasMaxLength(255);
+                entity.Property(e => e.L5ProductLine3)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("L5_PRODUCT_LINE3");
 
-                entity.Property(e => e.SplitPercent1).HasMaxLength(255);
+                entity.Property(e => e.L5ProductLine4)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("L5_PRODUCT_LINE4");
 
-                entity.Property(e => e.SplitPercent2).HasMaxLength(255);
+                entity.Property(e => e.L5ProductLine5)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("L5_PRODUCT_LINE5");
 
-                entity.Property(e => e.SplitPercent3).HasMaxLength(255);
+                entity.Property(e => e.OrderNumber)
+                    .HasMaxLength(255)
+                    .HasColumnName("ORDER_NUMBER");
 
-                entity.Property(e => e.SplitPercent4).HasMaxLength(255);
+                entity.Property(e => e.Region)
+                    .HasMaxLength(255)
+                    .HasColumnName("REGION");
 
-                entity.Property(e => e.SplitPercent5).HasMaxLength(255);
+                entity.Property(e => e.Region1)
+                    .HasMaxLength(255)
+                    .HasColumnName("REGION1");
+
+                entity.Property(e => e.Region2)
+                    .HasMaxLength(255)
+                    .HasColumnName("REGION2");
+
+                entity.Property(e => e.Region3)
+                    .HasMaxLength(255)
+                    .HasColumnName("REGION3");
+
+                entity.Property(e => e.Region4)
+                    .HasMaxLength(255)
+                    .HasColumnName("REGION4");
+
+                entity.Property(e => e.Region5)
+                    .HasMaxLength(255)
+                    .HasColumnName("REGION5");
+
+                entity.Property(e => e.SplitPercent)
+                    .HasMaxLength(255)
+                    .HasColumnName("SPLIT_PERCENT");
+
+                entity.Property(e => e.SplitPercent1)
+                    .HasMaxLength(255)
+                    .HasColumnName("SPLIT_PERCENT1");
+
+                entity.Property(e => e.SplitPercent2)
+                    .HasMaxLength(255)
+                    .HasColumnName("SPLIT_PERCENT2");
+
+                entity.Property(e => e.SplitPercent3)
+                    .HasMaxLength(255)
+                    .HasColumnName("SPLIT_PERCENT3");
+
+                entity.Property(e => e.SplitPercent4)
+                    .HasMaxLength(255)
+                    .HasColumnName("SPLIT_PERCENT4");
+
+                entity.Property(e => e.SplitPercent5)
+                    .HasMaxLength(255)
+                    .HasColumnName("SPLIT_PERCENT5");
 
                 entity.Property(e => e.SplitType)
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("SPLIT_TYPE");
 
-                entity.Property(e => e.TransDate).HasColumnType("datetime");
+                entity.Property(e => e.SubRegion)
+                    .HasMaxLength(255)
+                    .HasColumnName("SUB_REGION");
 
-                entity.Property(e => e.Transaction).HasMaxLength(255);
+                entity.Property(e => e.SubRegion1)
+                    .HasMaxLength(255)
+                    .HasColumnName("SUB_REGION1");
+
+                entity.Property(e => e.SubRegion2)
+                    .HasMaxLength(255)
+                    .HasColumnName("SUB_REGION2");
+
+                entity.Property(e => e.SubRegion3)
+                    .HasMaxLength(255)
+                    .HasColumnName("SUB_REGION3");
+
+                entity.Property(e => e.SubRegion4)
+                    .HasMaxLength(255)
+                    .HasColumnName("SUB_REGION4");
+
+                entity.Property(e => e.SubRegion5)
+                    .HasMaxLength(255)
+                    .HasColumnName("SUB_REGION5");
+
+                entity.Property(e => e.TransDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("TRANS_DATE");
+
+                entity.Property(e => e.Transcation)
+                    .HasMaxLength(255)
+                    .HasColumnName("TRANSCATION");
             });
 
             modelBuilder.Entity<V5McAppReportPeriod>(entity =>

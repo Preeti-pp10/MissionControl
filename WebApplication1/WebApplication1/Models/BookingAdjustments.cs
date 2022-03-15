@@ -2,11 +2,11 @@
 {
     public class BookingAdjustments
     {
-        public BookingOrder booking { get; set; }
+        public V5McAppOrderSplitBookingsAdjustmentsAudit booking { get; set; }
 
         public BookingAdjustments()
         {
-            booking = new BookingOrder();
+            booking = new V5McAppOrderSplitBookingsAdjustmentsAudit();
 
         }
     }

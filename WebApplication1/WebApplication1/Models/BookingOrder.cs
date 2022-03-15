@@ -56,6 +56,12 @@ namespace WebApplication1.Models
         public float? Bookings4 { get; set; }
         public float? Bookings5 { get; set; }
 
+        public string? L5ProductLine1 { get; set; }
+        public string? L5ProductLine2 { get; set; }
+        public string? L5ProductLine3 { get; set; }
+        public string? L5ProductLine4 { get; set; }
+        public string? L5ProductLine5 { get; set; }
+
 
     }
 }

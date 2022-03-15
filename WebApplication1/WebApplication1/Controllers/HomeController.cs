@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using System.Linq;
 using WebApplication1.Models;
-
+using System.Transactions;
 
 namespace WebApplication1.Controllers
 {
@@ -28,6 +31,13 @@ namespace WebApplication1.Controllers
             return Ok(res);
         }
 
+        [HttpGet(nameof(Getl5))]
+        public ActionResult Getl5(string Level3Desc , string Level4Desc)
+        {
+            MissionControlContext context = new MissionControlContext();
+            var res = context.DwhProductHierarchies.Where(l3 => l3.Level3Desc == Level3Desc).Where(l4 => l4.Level4Desc == Level4Desc).Select(l5 => l5.Level5Desc).ToList().Distinct();
+            return Ok(res);
+        }
 
 
         [HttpGet(nameof(GetById))]
@@ -76,7 +86,9 @@ namespace WebApplication1.Controllers
             v5McAppOrderSplit.L4BusinessUnit = bookingAdjustments.booking.L4BusinessUnit;
             v5McAppOrderSplit.L5ProductLine = bookingAdjustments.booking.L5ProductLine;
             v5McAppOrderSplit.CcAmtGrossBookings = bookingAdjustments.booking.Bookings;
+            v5McAppOrderSplit.CcAmtGrossBookings = bookingAdjustments.booking.CcAmtGrossBookings;
             v5McAppOrderSplit.Comments = bookingAdjustments.booking.Comments;
+            v5McAppOrderSplit.FiscalPeriod = bookingAdjustments.booking.FiscalPeriod;
             v5McAppOrderSplit.SplitType = " Custom Split";
             v5McAppOrderSplit.EntryBy = bookingAdjustments.booking.EntryBy;
             v5McAppOrderSplit.Region = bookingAdjustments.booking.Region;
@@ -91,6 +103,7 @@ namespace WebApplication1.Controllers
             if (bookingAdjustments.booking.District1 != null && bookingAdjustments.booking.SplitPercent1 != null && bookingAdjustments.booking.Bookings1 != null)
             {
                 v5McAppOrderSplit.Id = 0;
+                v5McAppOrderSplit.L5ProductLine = bookingAdjustments.booking.L5ProductLine1;
                 v5McAppOrderSplit.District = bookingAdjustments.booking.District1;
                 v5McAppOrderSplit.SplitPercent = bookingAdjustments.booking.SplitPercent1;
                 v5McAppOrderSplit.Bookings = bookingAdjustments.booking.Bookings1;
@@ -103,6 +116,7 @@ namespace WebApplication1.Controllers
             if (bookingAdjustments.booking.District2 != null && bookingAdjustments.booking.SplitPercent2 != null && bookingAdjustments.booking.Bookings2 != null)
             {
                 v5McAppOrderSplit.Id = 0;
+                v5McAppOrderSplit.L5ProductLine = bookingAdjustments.booking.L5ProductLine2;
                 v5McAppOrderSplit.District = bookingAdjustments.booking.District2;
                 v5McAppOrderSplit.SplitPercent = bookingAdjustments.booking.SplitPercent2;
                 v5McAppOrderSplit.Bookings = bookingAdjustments.booking.Bookings2;
@@ -115,6 +129,7 @@ namespace WebApplication1.Controllers
             {
                 v5McAppOrderSplit.Id = 0;
                 v5McAppOrderSplit.District = bookingAdjustments.booking.District3;
+                v5McAppOrderSplit.L5ProductLine = bookingAdjustments.booking.L5ProductLine3;
                 v5McAppOrderSplit.SplitPercent = bookingAdjustments.booking.SplitPercent3;
                 v5McAppOrderSplit.Bookings = bookingAdjustments.booking.Bookings3;
                 v5McAppOrderSplit.SubRegion = bookingAdjustments.booking.SubRegion3;
@@ -126,6 +141,7 @@ namespace WebApplication1.Controllers
             {
                 v5McAppOrderSplit.Id = 0;
                 v5McAppOrderSplit.District = bookingAdjustments.booking.District4;
+                v5McAppOrderSplit.L5ProductLine = bookingAdjustments.booking.L5ProductLine4;
                 v5McAppOrderSplit.SplitPercent = bookingAdjustments.booking.SplitPercent4;
                 v5McAppOrderSplit.Bookings = bookingAdjustments.booking.Bookings4;
                 v5McAppOrderSplit.SubRegion = bookingAdjustments.booking.SubRegion4;
@@ -137,6 +153,7 @@ namespace WebApplication1.Controllers
             if (bookingAdjustments.booking.District5 != null && bookingAdjustments.booking.SplitPercent5 != null && bookingAdjustments.booking.Bookings5 != null)
             {
                 v5McAppOrderSplit.Id = 0;
+                v5McAppOrderSplit.L5ProductLine = bookingAdjustments.booking.L5ProductLine5;
                 v5McAppOrderSplit.District = bookingAdjustments.booking.District5;
                 v5McAppOrderSplit.SplitPercent = bookingAdjustments.booking.SplitPercent5;
                 v5McAppOrderSplit.Bookings = bookingAdjustments.booking.Bookings5;
@@ -144,19 +161,51 @@ namespace WebApplication1.Controllers
                 v5McAppOrderSplit.Region = bookingAdjustments.booking.Region5;
                 res = objemployee.InsertCCb(v5McAppOrderSplit);
             }
-            if( res > 0)
+            if(res > 0)
             {
-                
+                bookingAdjustments.booking.SplitPercent = "100";
+                bookingAdjustments.booking.Bookings = bookingAdjustments.booking.CcAmtGrossBookings;
+                res = objemployee.InsertCCbAudit(bookingAdjustments.booking);
             }
 
             return Ok(res);
         }
 
-        [HttpPost(nameof(InsertAudit))]
-        public ActionResult InsertAudit (V5McAppOrderSplitBookingsAdjustmentsAudit v5McAppOrderSplitBookings)
+
+        [HttpGet(nameof(GetData))]
+        public ActionResult GetData()
         {
-            int res = objemployee.InsertCCbAudit(v5McAppOrderSplitBookings);
-            return Ok(res);
+            var query = (from sba in context.V5McAppOrderSplitBookingsAdjustments 
+                         join sbaa in context.V5McAppOrderSplitBookingsAdjustmentsAudits
+                         on sba.Transcation equals sbaa.Transcation where sbaa.SplitType == "Custom Split" select sbaa).ToList().Distinct();
+
+            return Ok(query);
         }
+
+
+        [HttpDelete(nameof(Delete))]
+        public ActionResult Delete(string Transcation)
+        {
+
+            var query = context.V5McAppOrderSplitBookingsAdjustments.Where(x => x.Transcation == Transcation).ToList();
+            context.V5McAppOrderSplitBookingsAdjustments.RemoveRange(query);
+            int res = context.SaveChanges();
+            return Ok(res);
+
+        }
+
+
+
+        [HttpPost(nameof(InsertCustomAudit))]
+        public ActionResult InsertCustomAudit()
+        {
+            int res = 0;
+            Guid guid = Guid.NewGuid();
+            V5McAppOrderSplitBookingsAdjustmentsAudit ba = AuditData(string Transcation);
+           
+            return Ok();
+        }
+
     }
 }
+;
