@@ -18,7 +18,7 @@ namespace WebApplication1.Models
         public string? Comments { get; set; }
         public double? CcAmtGrossBookings { get; set; }
         public string? SplitPercent { get; set; }
-        public DateTime? EntryDate { get; set; } = DateTime.Now;
+        public DateTime? EntryDate { get; set; }
         public string? EntryBy { get; set; }
         public string? SplitType { get; set; }
         public string? Region { get; set; }

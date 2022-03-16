@@ -7,5 +7,6 @@ namespace WebApplication1.Models
     {
         public int Id { get; set; }
         public string? Region1 { get; set; }
+        public string? SubRegion { get; set; }
     }
 }

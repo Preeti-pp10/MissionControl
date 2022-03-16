@@ -28,7 +28,7 @@ namespace ApplicationLayer.Queries.CCB_Adjustments
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<oracle_n_vias>(sql, new { ORDER_NUMBER  = query.ORDER_NUMBER });
+                    var result = await connection.QueryAsync<oracle_n_vias>(sql, new { ORDER_NUMBER = query.ORDER_NUMBER });
                     return result.ToList();
                 }
             }

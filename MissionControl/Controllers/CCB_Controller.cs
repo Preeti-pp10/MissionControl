@@ -16,7 +16,7 @@ namespace MissionControl.Controllers
         public async Task<IActionResult> CCB() => Ok(await Mediator.Send(new GetCCB()));
 
         [HttpPost(nameof(CCB_ById))]
-        public async Task<IActionResult> CCB_ById(GetCCBById query) => Ok(await Mediator.Send(query));
+        public async Task<IActionResult> CCB_ById(GetCCBById query) =>  Ok(await Mediator.Send(query));
 
         [HttpGet(nameof(Region))]
         public async Task<IActionResult> Region() => Ok(await Mediator.Send(new GetSalesLeader()));

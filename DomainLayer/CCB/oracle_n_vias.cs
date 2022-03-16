@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DomainLayer.CCB
 {
@@ -16,6 +12,7 @@ namespace DomainLayer.CCB
 
         }
         public int ID { get; set; }
+        [Column("OrderNumber")]
         public string ORDER_NUMBER { get; set; }
         public string Region { get; set; }
         public string SubRegion { get; set; }

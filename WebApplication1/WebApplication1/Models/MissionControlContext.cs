@@ -48,6 +48,7 @@ namespace WebApplication1.Models
         public virtual DbSet<V5McAppReportStatusAudit> V5McAppReportStatusAudits { get; set; } = null!;
         public virtual DbSet<V5McAppSbodbReportStatus> V5McAppSbodbReportStatuses { get; set; } = null!;
         public virtual DbSet<V5McAppSbodwReportPeriod> V5McAppSbodwReportPeriods { get; set; } = null!;
+        public virtual DbSet<V5McAppStandardSplitLabel> V5McAppStandardSplitLabels { get; set; } = null!;
         public virtual DbSet<V5McAppUpdateReportPeriod> V5McAppUpdateReportPeriods { get; set; } = null!;
         public virtual DbSet<V5McAppUpdateReportPeriodAudit> V5McAppUpdateReportPeriodAudits { get; set; } = null!;
         public virtual DbSet<V5ShDftFy19> V5ShDftFy19s { get; set; } = null!;
@@ -1058,6 +1059,10 @@ namespace WebApplication1.Models
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("Region");
+
+                entity.Property(e => e.SubRegion)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<RoleAccessMapping>(entity =>
@@ -1446,11 +1451,9 @@ namespace WebApplication1.Models
 
             modelBuilder.Entity<V5McAppOrderSplitBookingsAdjustmentsAudit>(entity =>
             {
-                
+                entity.HasNoKey();
 
                 entity.ToTable("V5_MC_App_Order_Split_Bookings_Adjustments_Audit");
-
-                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Bookings).HasColumnName("BOOKINGS");
 
@@ -2028,6 +2031,23 @@ namespace WebApplication1.Models
                     .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("report_year_quarter");
+            });
+
+            modelBuilder.Entity<V5McAppStandardSplitLabel>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("V5_MC_App_Standard_Split_Label");
+
+                entity.Property(e => e.District1).HasMaxLength(50);
+
+                entity.Property(e => e.District2).HasMaxLength(50);
+
+                entity.Property(e => e.District3).HasMaxLength(50);
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Label).HasMaxLength(50);
             });
 
             modelBuilder.Entity<V5McAppUpdateReportPeriod>(entity =>

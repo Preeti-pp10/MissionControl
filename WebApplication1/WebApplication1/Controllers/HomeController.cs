@@ -23,6 +23,14 @@ namespace WebApplication1.Controllers
         }
 
 
+        [HttpGet(nameof(GetLabel))]
+        public ActionResult GetLabel()
+        {
+            MissionControlContext context = new MissionControlContext();
+            return Ok(context.V5McAppStandardSplitLabels);
+        }
+
+
         [HttpGet(nameof(GetCCb))]
         public ActionResult GetCCb()
         {
@@ -183,6 +191,28 @@ namespace WebApplication1.Controllers
         }
 
 
+        [HttpGet(nameof(GetStandardData))]
+        public ActionResult GetStandardData(string OrderNumber)
+        {
+            var query = (from sba in context.V6DwhBookingsOracleNVias
+                         join sbaa in context.SbodwV5SalesLeaderHierarchyVs
+                         on sba.District equals sbaa.District
+                         where sba.OrderNumber == OrderNumber
+                         select new
+                         {
+                             OrderNumber = sba.OrderNumber,
+                             District = sba.District,
+                             PoNumber = sba.PoNumber,
+                             L3 = sba.L3BusinessGroup,
+                             L4 = sba.L4BusinessUnit,
+                             L5 = sba.L5ProductLine,
+                             Booking = sba.CcAmtGrossBookings,
+                         });
+
+            return Ok(query);
+        }
+
+
         [HttpDelete(nameof(Delete))]
         public ActionResult Delete(string Transcation)
         {
@@ -200,4 +230,3 @@ namespace WebApplication1.Controllers
 
     }
 }
-;
