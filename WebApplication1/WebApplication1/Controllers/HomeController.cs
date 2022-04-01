@@ -18,7 +18,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult GetOrders()
         {
-            MissionControlContext context = new MissionControlContext();    
+            MissionControlContext context = new MissionControlContext();
             return Ok(context.V6DwhBookingsOracleNVias);
         }
 
@@ -35,12 +35,12 @@ namespace WebApplication1.Controllers
         public ActionResult GetCCb()
         {
             MissionControlContext context = new MissionControlContext();
-            var res = context.V6DwhBookingsOracleNVias.Where(c=> !context.V5McAppOrderSplitBookingsAdjustments.Select(b=>b.OrderNumber).Contains(c.OrderNumber));
+            var res = context.V6DwhBookingsOracleNVias.Where(c => !context.V5McAppOrderSplitBookingsAdjustments.Select(b => b.OrderNumber).Contains(c.OrderNumber));
             return Ok(res);
         }
 
         [HttpGet(nameof(Getl5))]
-        public ActionResult Getl5(string Level3Desc , string Level4Desc)
+        public ActionResult Getl5(string Level3Desc, string Level4Desc)
         {
             MissionControlContext context = new MissionControlContext();
             var res = context.DwhProductHierarchies.Where(l3 => l3.Level3Desc == Level3Desc).Where(l4 => l4.Level4Desc == Level4Desc).Select(l5 => l5.Level5Desc).ToList().Distinct();
@@ -49,20 +49,20 @@ namespace WebApplication1.Controllers
 
 
         [HttpGet(nameof(GetById))]
-        public ActionResult<V6DwhBookingsOracleNVia> GetById( string OrderNumber)
+        public ActionResult<V6DwhBookingsOracleNVia> GetById(string OrderNumber)
         {
             MissionControlContext context = new MissionControlContext();
-            return Ok(context.V6DwhBookingsOracleNVias.Where( order => order.OrderNumber == OrderNumber).ToList());  
+            return Ok(context.V6DwhBookingsOracleNVias.Where(order => order.OrderNumber == OrderNumber).ToList());
         }
 
 
         [HttpPost]
         public ActionResult Insert(List<V5McAppOrderSplitBookingsAdjustment> v6Dwhs)
         {
-            using( MissionControlContext context = new MissionControlContext())
+            using (MissionControlContext context = new MissionControlContext())
             {
 
-               if( v6Dwhs == null)
+                if (v6Dwhs == null)
                 {
                     v6Dwhs = new List<V5McAppOrderSplitBookingsAdjustment>();
                 }
@@ -168,7 +168,7 @@ namespace WebApplication1.Controllers
                 v5McAppOrderSplit.Region = bookingAdjustments.booking.Region5;
                 res = objemployee.InsertCCb(v5McAppOrderSplit);
             }
-            if(res > 0)
+            if (res > 0)
             {
                 bookingAdjustments.booking.SplitPercent = "100";
                 bookingAdjustments.booking.Bookings = bookingAdjustments.booking.CcAmtGrossBookings;
@@ -182,9 +182,11 @@ namespace WebApplication1.Controllers
         [HttpGet(nameof(GetData))]
         public ActionResult GetData()
         {
-            var query = (from sba in context.V5McAppOrderSplitBookingsAdjustments 
+            var query = (from sba in context.V5McAppOrderSplitBookingsAdjustments
                          join sbaa in context.V5McAppOrderSplitBookingsAdjustmentsAudits
-                         on sba.Transcation equals sbaa.Transcation where sbaa.SplitType == "Custom Split" select sbaa).Distinct().ToList();
+                         on sba.Transcation equals sbaa.Transcation
+                         where sbaa.SplitType == "Custom Split"
+                         select sbaa).Distinct().ToList();
 
             return Ok(query);
         }
@@ -197,7 +199,7 @@ namespace WebApplication1.Controllers
                         join sbaa in context.SbodwV5SalesLeaderHierarchyVs
                         on sba.District equals sbaa.District
                         where sba.OrderNumber == OrderNumber
-                        group sba by new {sba.TransDate, sba.TransDatePeriodName, sba.OrderNumber, sba.PoNumber, sba.District, sba.L3BusinessGroup, sba.L4BusinessUnit, sba.L5ProductLine, sbaa.Region, sbaa.SubRegion } into g
+                        group sba by new { sba.TransDate, sba.TransDatePeriodName, sba.OrderNumber, sba.PoNumber, sba.District, sba.L3BusinessGroup, sba.L4BusinessUnit, sba.L5ProductLine, sbaa.Region, sbaa.SubRegion } into g
                         select new
                         {
                             OrderNumber = g.Key.OrderNumber,
@@ -212,7 +214,7 @@ namespace WebApplication1.Controllers
                             Region = g.Key.Region,
                             SubRegion = g.Key.SubRegion,
                         };
-                           
+
 
             return Ok(query);
         }
@@ -237,14 +239,14 @@ namespace WebApplication1.Controllers
             V5McAppStandardSplitLabel standardSplitLabel = new V5McAppStandardSplitLabel();
             BookingAdjustments booking = new BookingAdjustments();
             standardSplitLabel = objemployee.GetlabelById(Convert.ToInt32(standardSplit.SelectedLabel));
-            List<V5McAppOrderSplitBookingsAdjustment> v5McAppOrderSplits = objemployee.GetOrderById(standardSplit.SelectedOrder);
+            List<V5McAppOrderSplitBookingsAdjustment> v5McAppOrderSplits = objemployee.GetOrderById(standardSplit.OrderNumber);
             int res = 0;
 
             if (v5McAppOrderSplits.Count > 0)
             {
                 foreach (V5McAppOrderSplitBookingsAdjustment item in v5McAppOrderSplits)
                 {
-                    Guid guid = new Guid();
+                    Guid guid = Guid.NewGuid();
                     item.EntryBy = System.Environment.MachineName;
                     item.EntryDate = DateTime.Now;
                     item.SplitType = "Standard Split";
@@ -272,49 +274,59 @@ namespace WebApplication1.Controllers
                     booking.booking.Transcation = item.Transcation;
                     bs.EntryBy = item.EntryBy;
                     booking.booking.EntryBy = item.EntryBy;
+                    bs.EntryDate = item.EntryDate;
+                    booking.booking.EntryBy = item.EntryBy;
                     bs.SplitType = "Standard Split";
                     booking.booking.SplitType = "Standard Split";
-                    bs.Comments = item.Comments;
+                    bs.Comments = standardSplit.Comments;
                     booking.booking.Comments = standardSplit.Comments;
                     bs.CcAmtGrossBookings = item.CcAmtGrossBookings;
                     booking.booking.CcAmtGrossBookings = item.CcAmtGrossBookings;
+                    bs.Transcation = item.Transcation;
+                    booking.booking.Transcation = item.Transcation;
+                    bs.SplitPercent = "-100";
+                    booking.booking.SplitPercent = "100";
                     if (item.Bookings > 0)
                     {
-                        bs.Bookings = -1 * item.Bookings;
+                        bs.Bookings = -1 * item.CcAmtGrossBookings;
                     }
                     else
                     {
-                        bs.Bookings = item.Bookings;
+                        bs.Bookings = item.CcAmtGrossBookings;
                     }
-                    booking.booking.Bookings = item.Bookings;
+                    booking.booking.Bookings = item.CcAmtGrossBookings;
                     res = objemployee.InsertCCb(bs);
 
                     if (standardSplitLabel.District1 != null)
                     {
+                        bs.Id = 0;
+                        //booking.booking.Id = 0;
                         bs.District = standardSplitLabel.District1;
                         booking.booking.District = standardSplitLabel.District1;
                         bs.SplitPercent = standardSplitLabel.SplitPer1.ToString();
                         booking.booking.SplitPercent = standardSplitLabel.SplitPer1.ToString();
-                        bs.Bookings = item.Bookings;
-                        booking.booking.Bookings = item.Bookings;
+                        bs.Bookings = item.CcAmtGrossBookings;
+                        booking.booking.Bookings = item.CcAmtGrossBookings;
                         res = objemployee.InsertCCb(bs);
                     }
 
 
                     if (standardSplitLabel.District2 != null)
                     {
+                        bs.Id = 0;
+                        //booking.booking.Id = 0;
                         bs.District = standardSplitLabel.District2;
                         booking.booking.District = standardSplitLabel.District2;
                         bs.SplitPercent = standardSplitLabel.SplitPer2.ToString();
                         booking.booking.SplitPercent = standardSplitLabel.SplitPer2.ToString();
-                        bs.Bookings = item.Bookings;
-                        booking.booking.Bookings = item.Bookings;
+                        bs.Bookings = item.CcAmtGrossBookings;
+                        booking.booking.Bookings = item.CcAmtGrossBookings;
                         res = objemployee.InsertCCb(bs);
                     }
                 }
             }
             return Ok(res);
         }
-
     }
+ 
 }

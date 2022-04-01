@@ -39,7 +39,7 @@ namespace WebApplication1.Models
 
         public List<V5McAppOrderSplitBookingsAdjustment> GetOrderById(string OrderNumber)
         {
-            List <V5McAppOrderSplitBookingsAdjustment> v5McAppOrderSplits = new List<V5McAppOrderSplitBookingsAdjustment>();
+            var data = new List<V5McAppOrderSplitBookingsAdjustment>();
             var query = (from sba in db.V6DwhBookingsOracleNVias
                         join sbaa in db.SbodwV5SalesLeaderHierarchyVs
                         on sba.District equals sbaa.District
@@ -57,13 +57,37 @@ namespace WebApplication1.Models
                             TransDatePeriodName = g.Key.TransDatePeriodName,
                             CcAmtGrossBookings = g.Sum(x => x.CcAmtGrossBookings),
                             Region = g.Key.Region,
-                            SubRegion = g.Key.SubRegion
+                            SubRegion = g.Key.SubRegion,
+                            
                         }).ToList();
-            return v5McAppOrderSplits;
+            if(query.Count >0)
+            {
+                foreach(var item in query)
+                {
+                    data.Add(new V5McAppOrderSplitBookingsAdjustment()
+                    {
+                        OrderNumber = item.OrderNumber,
+                        District = item.District,
+                        L3BusinessGroup = item.L3BusinessGroup,
+                        L4BusinessUnit = item.L4BusinessUnit,
+                        L5ProductLine = item.L5ProductLine,
+                        TransDate = item.TransDate,
+                        FiscalPeriod = item.TransDatePeriodName,
+                        CcAmtGrossBookings = item.CcAmtGrossBookings,
+                        Region = item.Region,
+                        SubRegion = item.SubRegion
+
+                    });
+                }
+            }
+            return data ;
+
+           
 
         }
 
 
+       
 
     }
 }

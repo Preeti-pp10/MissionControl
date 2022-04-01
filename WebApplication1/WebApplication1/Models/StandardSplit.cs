@@ -5,7 +5,7 @@
         public string SelectedLabel { get; set; }
         //public int SelectedLabelId { get; set; }
 
-        public string SelectedOrder { get; set;}
+        public string OrderNumber { get; set;}
 
         public string Comments { get; set;}
     }

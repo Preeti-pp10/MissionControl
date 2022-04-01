@@ -6,7 +6,7 @@ namespace WebApplication1.Models
     public partial class V5McAppOrderSplitBookingsAdjustment
     {
         public int Id { get; set; }
-        public string? Transcation { get; set; }
+        public string? Transcation { get; set; } 
         public string? OrderNumber { get; set; }
         public string? District { get; set; }
         public string? FiscalPeriod { get; set; }
@@ -18,7 +18,7 @@ namespace WebApplication1.Models
         public string? Comments { get; set; }
         public double? CcAmtGrossBookings { get; set; }
         public string? SplitPercent { get; set; }
-        public DateTime? EntryDate { get; set; }
+        public DateTime? EntryDate { get; set; } = DateTime.Now;
         public string? EntryBy { get; set; }
         public string? SplitType { get; set; }
         public string? Region { get; set; }
